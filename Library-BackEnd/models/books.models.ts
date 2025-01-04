@@ -7,7 +7,7 @@ export interface IBook extends Document{
     quantity: number;
     image?: string;
     description: string;
-    color?: string;
+    color: String
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -37,14 +37,14 @@ const BookSchema: Schema = new Schema({
         type: String,
         required : false
     },
+    color: {
+        type: String,
+        required : false
+    },
     description: {
         type: String,
         require: [true, "Enter the Book description"]
     },
-    color: {
-        type: String,
-        required: false
-    }
 },
 {
     timestamps: true,

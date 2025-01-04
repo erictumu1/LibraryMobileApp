@@ -102,7 +102,7 @@ class _BookDetailsState extends State<BookDetails> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Quantity: ${bookDetails!['quantity'] ?? 0}',
+                  'Units Available: ${bookDetails!['quantity'] ?? 0}',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 40),
