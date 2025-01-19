@@ -15,7 +15,7 @@ class BookProvider with ChangeNotifier {
     if (response.statusCode == 200) {
       articles = jsonDecode(response.body);
 
-      // Sorts the books to ensure the newest book added comes up to the top.
+      // Sorts the books to ensure that the newest book added comes up to the top.
       articles.sort((a, b) => b['createdAt'].compareTo(a['createdAt']));
 
       // Update filteredArticles with the newly sorted data
