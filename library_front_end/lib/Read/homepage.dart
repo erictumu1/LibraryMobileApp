@@ -112,74 +112,75 @@ class _HomescreenState extends State<Homepage> {
                           ),
                         );
                       },
-                      child: SingleChildScrollView(
-                        child: Card(
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          color: Colors.white,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(12),
-                                  topRight: Radius.circular(12),
-                                ),
-                                child: article['image'] != null
-                                    ? Image.network(
-                                  article['image'],
-                                  height: 150,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
-                                )
-                                    : Image.asset(
-                                  'lib/images/book.png',
-                                  height: 150,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
+                      child: Card(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        color: Colors.white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                topRight: Radius.circular(12),
+                              ),
+                              child: article['image'] != null
+                                  ? Image.network(
+                                article['image'],
+                                height: 150,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              )
+                                  : Image.asset(
+                                'lib/images/book.png',
+                                height: 150,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    // Book Title
+                                    Text(
+                                      article['title'] ?? 'No title',
+                                      style: TextStyle(
+                                          color: Colors.indigo[900],
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Playfair'),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    SizedBox(height: 4),
+                                    // Book Author
+                                    Text(
+                                      'Author: ${article['author'] ?? 'Unknown'}',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    SizedBox(height: 8),
+                                    // Book Quantity
+                                    Text(
+                                      'Units Available: ${article['quantity']}',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      // Book Title
-                                      Text(
-                                        article['title'] ?? 'No title',
-                                        style: TextStyle(
-                                            color: Colors.indigo[900],
-                                            fontSize: 19,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Playfair'),
-                                      ),
-                                      SizedBox(height: 4),
-                                      // Book Author
-                                      Text(
-                                        'Author: ${article['author'] ?? 'Unknown'}',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16),
-                                      ),
-                                      SizedBox(height: 8),
-                                      // Book Quantity
-                                      Text(
-                                        'Units Available: ${article['quantity']}',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     );

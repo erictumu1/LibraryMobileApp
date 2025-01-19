@@ -13,10 +13,10 @@ class _WelcomescreenState extends State<Welcomescreen> {
   @override
   void initState() {
     super.initState();
-    // Future.delayed(Duration(seconds: 5), () {
-    //   Navigator.pushReplacement(
-    //       context, MaterialPageRoute(builder: (context) => Authentication()));
-    // });
+     Future.delayed(Duration(seconds: 5), () {
+       Navigator.pushReplacement(
+           context, MaterialPageRoute(builder: (context) => Authentication()));
+     });
   }
 
   Widget build(BuildContext context) {

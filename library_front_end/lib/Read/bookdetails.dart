@@ -1,60 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-// import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:library_front_end/Provider/bookprovider.dart';
 
-class BookDetails extends StatefulWidget {
+class BookDetails extends StatelessWidget {
   final String bookId;
 
   const BookDetails({super.key, required this.bookId});
 
   @override
-  State<BookDetails> createState() => _BookDetailsState();
-}
-
-class _BookDetailsState extends State<BookDetails> {
-  Map<String, dynamic>? bookDetails;
-  bool isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    fetchBookDetails();
-  }
-
-  Future<void> fetchBookDetails() async {
-    final response = await http
-        .get(Uri.parse('http://172.24.112.1:3000/books/${widget.bookId}'));
-
-    if (response.statusCode == 200) {
-      setState(() {
-        bookDetails = jsonDecode(response.body);
-        isLoading = false;
-      });
-    } else {
-      setState(() {
-        isLoading = false;
-      });
-      throw Exception('Failed to load book details');
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final bookProvider = context.watch<BookProvider>();
+    final bookDetails =
+    bookProvider.articles.firstWhere((book) => book['_id'] == bookId, orElse: () => null);
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text(
             'Book Details',
-          style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-          fontSize: 21,
-          fontFamily: 'merriweatherdark')
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 21,
+                fontFamily: 'merriweatherdark'),
           ),
           backgroundColor: Colors.grey[300],
         ),
-        body: isLoading
+        body: bookProvider.articles.isEmpty
             ? Center(
           child: CircularProgressIndicator(
             color: Colors.indigo[900],
@@ -74,10 +46,10 @@ class _BookDetailsState extends State<BookDetails> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (bookDetails!['image'] != null)
+                if (bookDetails['image'] != null)
                   Center(
                     child: Image.network(
-                      bookDetails!['image'],
+                      bookDetails['image'],
                       height: 200,
                     ),
                   ),
@@ -87,7 +59,7 @@ class _BookDetailsState extends State<BookDetails> {
                   thickness: 3,
                 ),
                 Text(
-                  bookDetails!['title'] ?? 'No Title',
+                  bookDetails['title'] ?? 'No Title',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
@@ -97,13 +69,14 @@ class _BookDetailsState extends State<BookDetails> {
                 ),
                 SizedBox(height: 40),
                 Text(
-                  'Author: ${bookDetails!['author'] ?? 'Unknown'}',
+                  'Author: ${bookDetails['author'] ?? 'Unknown'}',
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Units Available: ${bookDetails!['quantity'] ?? 0}',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  'Units Available: ${bookDetails['quantity'] ?? 0}',
+                  style: TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 40),
                 Text(
@@ -113,9 +86,10 @@ class _BookDetailsState extends State<BookDetails> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  bookDetails!['description'] ??
+                  bookDetails['description'] ??
                       'No description available.',
-                  style: TextStyle(fontSize: 20,fontFamily: 'merriweatherlight'),
+                  style: TextStyle(
+                      fontSize: 20, fontFamily: 'merriweatherlight'),
                 ),
               ],
             ),
